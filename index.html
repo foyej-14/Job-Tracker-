@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Tracker</title>
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind css cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      body.geist-font {
+        font-family: "Geist", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body
+    class="max-w-sm md:max-w-3xl lg:max-w-6xl mx-auto geist-font bg-gray-200"
+  >
+    <header class="p-4">
+      <!-- statistics section -->
+      <h1 class="text-2xl md:text-3xl lg:text-4xl">Job Application Tracker</h1>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 mx-4">
+        <div class="border bg-white px-4 py-2 rounded-lg">
+          <p>Total</p>
+          <p class="jobCount text-3xl">0</p>
+        </div>
+        <div class="border bg-white px-4 py-2 rounded-lg">
+          <p>Interview</p>
+          <p id="interviewJobs" class="text-green-600 text-3xl">0</p>
+        </div>
+        <div class="border bg-white px-4 py-2 rounded-lg">
+          <p>Rejected</p>
+          <p id="rejectedJobs" class="text-red-600 text-3xl">0</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-4">
+      <!-- filter buttons section -->
+      <section class="mt-8">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg md:text-3xl mb-2">Available Jobs</h3>
+          <p id="selectedJobText">
+            <span id="selectedJobCount" class="font-bold">0</span> jobs
+          </p>
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            onclick="toggleActiveButton(this)"
+            id="all-filter-btn"
+            class="bg-blue-500 text-white font-bold py-2 px-4 rounded cursor-pointer"
+          >
+            All
+          </button>
+          <button
+            onclick="toggleActiveButton(this)"
+            id="interview-filter-btn"
+            class="bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-pointer"
+          >
+            Interview
+          </button>
+          <button
+            onclick="toggleActiveButton(this)"
+            id="rejected-filter-btn"
+            class="bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-pointer"
+          >
+            Rejected
+          </button>
+        </div>
+      </section>
+
+      <!-- static job cards section -->
+      <section class="mb-8">
+        <div id="allCardsContainer">
+          <!-- 1st card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">NVIDIA</h3>
+              <p class="designation font-light">
+                Senior AI Infrastructure Engineer
+              </p>
+              <p class="salary font-light">
+                Santa Clara, CA • Full-time • $180,000 - $260,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                You will design and optimize the large-scale GPU clusters that
+                power the next generation of LLMs. This involves working with
+                CUDA, high-performance networking (InfiniBand), and ensuring
+                maximum uptime for deep learning training environments.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 2nd card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Microsoft</h3>
+              <p class="designation font-light">
+                Cloud Solutions Architect (Azure)
+              </p>
+              <p class="salary font-light">
+                Redmond, WA (Remote Eligible within the US) • Full-time •
+                $80,000 - $120,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Migrating enterprise infrastructure to cloud-native environments
+                using Kubernetes and Terraform.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 3rd card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">CrowdStrike</h3>
+              <p class="designation font-light">Lead Threat Hunter</p>
+              <p class="salary font-light">
+                Austin, TX (Fully Remote) • Full-time • $135,000 - $195,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Leading incident response and developing automated detection
+                scripts to counter nation-state cyber threats.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 4th card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Google</h3>
+              <p class="designation font-light">Senior PM, Generative AI</p>
+              <p class="salary font-light">
+                Mountain View, CA (Hybrid - Office based) • Full-time • $140,000
+                - $190,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Defining the roadmap for AI-integrated search features and
+                managing cross-functional engineering teams.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 5th card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Databricks</h3>
+              <p class="designation font-light">Senior SRE</p>
+              <p class="salary font-light">
+                San Francisco, CA (Hybrid / Remote Friendly) • Full-time •
+                $160,000 - $225,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Automating operational tasks and maintaining 99.9% uptime for
+                global data and AI platforms.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 6th card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Revolut</h3>
+              <p class="designation font-light">Senior Full Stack Engineer</p>
+              <p class="salary font-light">
+                Barcelona, Spain (Fully Remote within EMEA)• Full-time • €85,000
+                – €110,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Building high-traffic fintech features for mobile and web using
+                React and Node.js microservices.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 7th card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Amazon (AWS)</h3>
+              <p class="designation font-light">Principal Data Architect</p>
+              <p class="salary font-light">
+                Seattle, WA (Hybrid - 2 days in office) • Full-time • $170,000 -
+                $240,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Designing petabyte-scale data lakes and business intelligence
+                structures using AWS Glue and Redshift.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <!-- 8th card -->
+          <div
+            class="job-card flex flex-col md:flex-row justify-between border p-4 bg-white rounded-lg mt-4"
+          >
+            <div class="space-y-4">
+              <h3 class="company-name text-2xl font-semibold">Siemens</h3>
+              <p class="designation font-light">IT Delivery Manager</p>
+              <p class="salary font-light">
+                Munich, Germany (Hybrid / Regional Remote)• Full-time • €75,000
+                – €95,000
+              </p>
+              <button class="status bg-gray-100 p-2 font-bold">
+                Not Applied
+              </button>
+              <p class="details font-medium">
+                Managing the delivery of internal IT services and digital
+                transformation projects across European offices.
+              </p>
+              <div class="flex gap-2 mt-2">
+                <button
+                  class="interview-btn text-green-600 border border-green-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  INTERVIEW
+                </button>
+                <button
+                  class="reject-btn text-red-600 border border-red-600 text-lg py-2 px-2 rounded cursor-pointer"
+                >
+                  REJECTED
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                class="delete-btn bg-red-500 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4 md:mt-0"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- filtered job cards section -->
+      <section id="filteredJobsSection" class="hidden"></section>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
